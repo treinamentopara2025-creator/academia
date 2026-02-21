@@ -1,14 +1,41 @@
-let alunos = JSON.parse(localStorage.getItem('gym_v_final')) || [];
+// ACESSO: admin / 1234
+const LOGIN_DATA = { user: "admin", pass: "1234" };
+
+let alunos = JSON.parse(localStorage.getItem('gym_data_final')) || [];
 let fotoBase64 = "";
 let abaAtual = 'todos';
 
+// Verifica login ao carregar
 window.onload = () => {
+    if (sessionStorage.getItem('acesso_gym') === 'true') mostrarApp();
     const hoje = new Date();
     document.getElementById('vencimento').value = hoje.getDate();
     document.getElementById('mes_referencia').selectedIndex = hoje.getMonth();
     renderizar();
 };
 
+function fazerLogin() {
+    const u = document.getElementById('user').value;
+    const p = document.getElementById('pass').value;
+    if(u === LOGIN_DATA.user && p === LOGIN_DATA.pass) {
+        sessionStorage.setItem('acesso_gym', 'true');
+        mostrarApp();
+    } else {
+        document.getElementById('erro-login').style.display = 'block';
+    }
+}
+
+function mostrarApp() {
+    document.getElementById('tela-login').style.display = 'none';
+    document.getElementById('conteudo-app').style.display = 'block';
+}
+
+function logout() {
+    sessionStorage.removeItem('acesso_gym');
+    location.reload();
+}
+
+// Upload de Foto
 document.getElementById('foto-input').addEventListener('change', function(e) {
     const reader = new FileReader();
     reader.onload = function() {
@@ -32,7 +59,7 @@ function adicionarAluno() {
     const mes = document.getElementById('mes_referencia').value;
     const venc = document.getElementById('vencimento').value;
 
-    if(!nome) return alert("Digite o nome!");
+    if(!nome || !venc) return alert("Preencha nome e dia de vencimento!");
 
     alunos.push({
         id: Date.now(),
@@ -44,17 +71,8 @@ function adicionarAluno() {
     });
 
     salvarEAtualizar();
-    
-    // Alerta de sucesso
-    const toast = document.getElementById('confirmacao');
-    toast.style.display = 'block';
-    setTimeout(() => toast.style.display = 'none', 2000);
-
-    // Resetar campos
-    document.getElementById('nome').value = '';
-    document.getElementById('img-preview').style.display = 'none';
-    document.getElementById('placeholder').style.display = 'block';
-    fotoBase64 = "";
+    exibirAlerta();
+    resetarFormulario();
 }
 
 function darBaixa(id) {
@@ -62,16 +80,22 @@ function darBaixa(id) {
     salvarEAtualizar();
 }
 
-function remover(id) {
-    if(confirm("Excluir este aluno?")) {
-        alunos = alunos.filter(a => a.id !== id);
-        salvarEAtualizar();
-    }
+function salvarEAtualizar() {
+    localStorage.setItem('gym_data_final', JSON.stringify(alunos));
+    renderizar();
 }
 
-function salvarEAtualizar() {
-    localStorage.setItem('gym_v_final', JSON.stringify(alunos));
-    renderizar();
+function exibirAlerta() {
+    const toast = document.getElementById('confirmacao');
+    toast.style.display = 'block';
+    setTimeout(() => toast.style.display = 'none', 2000);
+}
+
+function resetarFormulario() {
+    document.getElementById('nome').value = '';
+    document.getElementById('img-preview').style.display = 'none';
+    document.getElementById('placeholder').style.display = 'block';
+    fotoBase64 = "";
 }
 
 function renderizar() {
@@ -80,6 +104,7 @@ function renderizar() {
     const dHoje = new Date().getDate();
     container.innerHTML = '';
     
+    // Atualizar Contadores
     document.getElementById('stat-total').innerText = alunos.length;
     document.getElementById('stat-pagos').innerText = alunos.filter(a => a.pago).length;
     document.getElementById('stat-atrasados').innerText = alunos.filter(a => !a.pago && dHoje > a.vencimento).length;
@@ -90,22 +115,17 @@ function renderizar() {
 
     lista.forEach(aluno => {
         const isAtrasado = !aluno.pago && dHoje > aluno.vencimento;
-        const statusClasse = aluno.pago ? "pago" : (isAtrasado ? "atrasado" : "");
-
         const card = document.createElement('div');
-        card.className = `aluno-item ${statusClasse}`;
+        card.className = `aluno-item ${aluno.pago ? 'pago' : (isAtrasado ? 'atrasado' : '')}`;
         card.innerHTML = `
             <img src="${aluno.foto}" class="foto-aluno">
             <div class="info">
                 <h4>${aluno.nome}</h4>
                 <p>Venc.: Dia ${aluno.vencimento} | ${aluno.mes}</p>
             </div>
-            <div class="acoes">
-                <button class="btn-baixa ${aluno.pago ? 'pago-btn' : ''}" onclick="darBaixa(${aluno.id})">
-                    ${aluno.pago ? 'Pago' : 'Baixa'}
-                </button>
-                <button class="btn-del" onclick="remover(${aluno.id})">Excluir</button>
-            </div>
+            <button class="btn-baixa ${aluno.pago ? 'pago-btn' : ''}" onclick="darBaixa(${aluno.id})">
+                ${aluno.pago ? 'Pago' : 'Baixa'}
+            </button>
         `;
         container.appendChild(card);
     });
