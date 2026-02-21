@@ -1,5 +1,5 @@
 // ACESSO: admin / 1234
-const LOGIN_DATA = { user: "admin", pass: "1234" };
+const LOGIN_DATA = { user: "Admin", pass: "1234" };
 
 let alunos = JSON.parse(localStorage.getItem('gym_data_final')) || [];
 let fotoBase64 = "";
@@ -130,3 +130,4 @@ function renderizar() {
         container.appendChild(card);
     });
 }
+
