@@ -8,60 +8,69 @@
 </head>
 <body>
 
-<div id="confirmacao">✅ Aluno cadastrado com sucesso!</div>
-
-<div class="container">
-    <header>
-        <img src="images.jpg" alt="Logo Fitness" class="logo-header">
-    </header>
-
-    <div class="resumo-abas">
-        <div id="tab-todos" class="tab-btn tab-total active" onclick="mudarAba('todos')">
-            <span id="stat-total">0</span> TOTAL
-        </div>
-        <div id="tab-pagos" class="tab-btn tab-pagos" onclick="mudarAba('pagos')">
-            <span id="stat-pagos">0</span> PAGOS
-        </div>
-        <div id="tab-atrasados" class="tab-btn tab-atrasados" onclick="mudarAba('atrasados')">
-            <span id="stat-atrasados">0</span> ATRASADOS
-        </div>
+<div id="tela-login">
+    <div class="login-box">
+        <img src="imagem5.jpg" alt="Logo Fitness" class="logo-login">
+        <h3>Acesso Interno</h3>
+        <input type="text" id="user" placeholder="Usuário">
+        <input type="password" id="pass" placeholder="Senha">
+        <button class="btn-primary" onclick="fazerLogin()">ENTRAR</button>
+        <p id="erro-login" class="erro">Senha incorreta!</p>
     </div>
-    
-    <div class="form-cadastro">
-        <div class="foto-preview-box">
-            <span id="placeholder">👤</span>
-            <img id="img-preview" src="">
-        </div>
-        
-        <input type="text" id="nome" placeholder="Nome do Aluno">
-        
-        <div class="row">
-            <select id="mes_referencia">
-                <option value="Janeiro">Janeiro</option>
-                <option value="Fevereiro">Fevereiro</option>
-                <option value="Março">Março</option>
-                <option value="Abril">Abril</option>
-                <option value="Maio">Maio</option>
-                <option value="Junho">Junho</option>
-                <option value="Julho">Julho</option>
-                <option value="Agosto">Agosto</option>
-                <option value="Setembro">Setembro</option>
-                <option value="Outubro">Outubro</option>
-                <option value="Novembro">Novembro</option>
-                <option value="Dezembro">Dezembro</option>
-            </select>
-            <input type="number" id="vencimento" placeholder="Dia">
+</div>
+
+<div id="conteudo-app" style="display: none;">
+    <div id="confirmacao">✅ Aluno cadastrado!</div>
+
+    <div class="container">
+        <header>
+            <img src="imagem5.jpg" alt="Logo Fitness" class="logo-header">
+            <button onclick="logout()" class="btn-logout">Sair do Sistema</button>
+        </header>
+
+        <div class="resumo-abas">
+            <div id="tab-todos" class="tab-btn tab-total active" onclick="mudarAba('todos')">
+                <span id="stat-total">0</span> TOTAL
+            </div>
+            <div id="tab-pagos" class="tab-btn tab-pagos" onclick="mudarAba('pagos')">
+                <span id="stat-pagos">0</span> PAGOS
+            </div>
+            <div id="tab-atrasados" class="tab-btn tab-atrasados" onclick="mudarAba('atrasados')">
+                <span id="stat-atrasados">0</span> ATRASADOS
+            </div>
         </div>
 
-        <label class="foto-label" for="foto-input">📷 Tirar Foto</label>
-        <input type="file" id="foto-input" accept="image/*" style="display: none;">
-        
-        <button class="btn-add" onclick="adicionarAluno()">CADASTRAR ALUNO</button>
+        <div class="form-cadastro">
+            <div class="foto-preview-box">
+                <span id="placeholder">👤</span>
+                <img id="img-preview" src="">
+            </div>
+            <input type="text" id="nome" placeholder="Nome do Aluno">
+            <div class="row">
+                <select id="mes_referencia">
+                    <option value="Janeiro">Janeiro</option>
+                    <option value="Fevereiro">Fevereiro</option>
+                    <option value="Março">Março</option>
+                    <option value="Abril">Abril</option>
+                    <option value="Maio">Maio</option>
+                    <option value="Junho">Junho</option>
+                    <option value="Julho">Julho</option>
+                    <option value="Agosto">Agosto</option>
+                    <option value="Setembro">Setembro</option>
+                    <option value="Outubro">Outubro</option>
+                    <option value="Novembro">Novembro</option>
+                    <option value="Dezembro">Dezembro</option>
+                </select>
+                <input type="number" id="vencimento" placeholder="Dia">
+            </div>
+            <label class="foto-label" for="foto-input">📷 Selecionar Foto</label>
+            <input type="file" id="foto-input" accept="image/*" style="display: none;">
+            <button class="btn-primary" onclick="adicionarAluno()">CADASTRAR NOVO ALUNO</button>
+        </div>
+
+        <input type="text" id="inputBusca" class="busca-input" placeholder="🔍 Buscar aluno por nome..." onkeyup="renderizar()">
+        <div id="listaAlunos"></div>
     </div>
-
-    <input type="text" id="inputBusca" class="busca-input" placeholder="🔍 Pesquisar por nome..." onkeyup="renderizar()">
-
-    <div id="listaAlunos"></div>
 </div>
 
 <script src="script.js"></script>
