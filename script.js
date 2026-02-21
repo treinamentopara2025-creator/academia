@@ -130,5 +130,3 @@ function renderizar() {
         container.appendChild(card);
     });
 }
-
-
