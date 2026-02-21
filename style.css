@@ -1,0 +1,66 @@
+:root {
+    --primary: #2563eb;
+    --success: #16a34a;
+    --danger: #dc2626;
+    --warning: #f59e0b;
+    --dark: #0f172a;
+}
+
+body { 
+    font-family: -apple-system, system-ui, sans-serif; 
+    background: #f1f5f9; margin: 0; padding: 10px; color: var(--dark); 
+}
+
+.container { max-width: 500px; margin: auto; }
+
+/* Logo */
+header { text-align: center; padding: 10px 0; }
+.logo-header { max-width: 160px; height: auto; border-radius: 100px; }
+
+/* Alerta */
+#confirmacao {
+    position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+    background: var(--success); color: white; padding: 12px 25px;
+    border-radius: 30px; font-weight: bold; display: none; z-index: 1000;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+/* Abas */
+.resumo-abas { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 15px; }
+.tab-btn { 
+    padding: 12px 5px; border-radius: 12px; color: white; text-align: center; 
+    font-size: 0.7rem; font-weight: bold; cursor: pointer; opacity: 0.5; transition: 0.3s;
+}
+.tab-total { background: var(--dark); }
+.tab-pagos { background: var(--success); }
+.tab-atrasados { background: var(--warning); }
+.tab-btn.active { opacity: 1; transform: scale(1.05); box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+.tab-btn span { display: block; font-size: 1.2rem; }
+
+/* Cadastro */
+.form-cadastro { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 20px; }
+.foto-preview-box { width: 80px; height: 80px; margin: 0 auto 15px; border: 3px solid var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; overflow: hidden; background: #f8fafc; }
+.foto-preview-box img { width: 100%; height: 100%; object-fit: cover; display: none; }
+.foto-preview-box span { font-size: 2rem; color: #cbd5e1; }
+
+.row { display: flex; gap: 8px; }
+input, select { width: 100%; padding: 12px; margin-bottom: 10px; border: 1px solid #cbd5e1; border-radius: 8px; box-sizing: border-box; font-size: 16px; }
+
+.foto-label { display: block; background: #f1f5f9; color: var(--primary); padding: 12px; text-align: center; border-radius: 8px; cursor: pointer; font-weight: bold; border: 2px dashed var(--primary); margin-bottom: 12px; }
+.btn-add { width: 100%; background: var(--primary); color: white; padding: 15px; border: none; border-radius: 8px; font-weight: bold; }
+
+/* Busca */
+.busca-input { border: 2px solid #cbd5e1; border-radius: 10px; padding: 12px; width: 100%; box-sizing: border-box; margin-bottom: 15px; }
+
+/* Lista */
+.aluno-item { background: white; padding: 12px; border-radius: 15px; margin-bottom: 10px; display: flex; align-items: center; gap: 12px; border-right: 6px solid #cbd5e1; }
+.pago { border-right-color: var(--success); }
+.atrasado { border-right-color: var(--danger); }
+.foto-aluno { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; }
+.info { flex-grow: 1; }
+.info h4 { margin: 0; font-size: 0.95rem; text-transform: capitalize; }
+.info p { margin: 2px 0; font-size: 0.75rem; color: #64748b; }
+
+.btn-baixa { padding: 8px 12px; border-radius: 8px; border: none; font-weight: bold; background: #e2e8f0; }
+.pago-btn { background: var(--success); color: white; }
+.btn-del { color: #94a3b8; border: none; background: none; font-size: 0.65rem; text-decoration: underline; cursor: pointer; }
